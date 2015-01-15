@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="inter_nations.type_jail.factory.class"/>
+        <parameter key="inter_nations.type_jail.types"/>
+        <parameter key="inter_nations.type_jail.factory.jail_factory.class">InterNations\Component\TypeJail\Factory\JailFactory</parameter>
+        <parameter key="inter_nations.type_jail.factory.super_type_jail_factory.class">InterNations\Component\TypeJail\Factory\SuperTypeJailFactory</parameter>
+        <parameter key="inter_nations.type_jail.factory.super_type_factory.class">InterNations\Component\TypeJail\Factory\SuperTypeFactory</parameter>
+        <parameter key="inter_nations.type_jail.factory.null_factory.class">InterNations\Bundle\TypeJailBundle\Factory\NullFactory</parameter>
+        <parameter key="inter_nations.type_jail.namespace">InterNationsJail</parameter>
+        <parameter key="inter_nations.type_jail.proxy_dir">%kernel.cache_dir%/type-jail</parameter>
+    </parameters>
+
+    <services>
+        <service id="inter_nations.type_jail.factory" class="%inter_nations.type_jail.factory.class%">
+            <argument type="service" id="inter_nations.type_jail.configuration"/>
+        </service>
+
+        <service id="inter_nations.type_jail.configuration" class="ProxyManager\Configuration" public="false">
+            <call method="setProxiesNamespace">
+                <argument>%inter_nations.type_jail.namespace%</argument>
+            </call>
+            <call method="setProxiesTargetDir">
+                <argument>%inter_nations.type_jail.proxy_dir%</argument>
+            </call>
+            <call method="setClassNameInflector">
+                <argument type="service" id="inter_nations.type_jail.class_name_inflector"/>
+            </call>
+        </service>
+
+        <service
+            id="inter_nations.type_jail.class_name_inflector"
+            class="InterNations\Component\TypeJail\Inflector\ClassNameInflector"
+            public="false">
+            <argument>%inter_nations.type_jail.namespace%</argument>
+        </service>
+
+        <service
+            id="inter_nations.type_jail.manager.type_alias_manager"
+            class="InterNations\Bundle\TypeJailBundle\Manager\TypeAliasManager">
+            <argument>%inter_nations.type_jail.types%</argument>
+        </service>
+
+        <service
+            id="inter_nations.type_jail.view.twig.extension.type_jail_extension"
+            class="InterNations\Bundle\TypeJailBundle\View\Twig\Extension\TypeJailExtension"
+            public="false">
+            <argument type="service" id="inter_nations.type_jail.factory"/>
+            <argument type="service" id="inter_nations.type_jail.manager.type_alias_manager"/>
+            <tag name="twig.extension" />
+        </service>
+    </services>
+</container>

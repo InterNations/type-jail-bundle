@@ -1,0 +1,14 @@
+parameters:
+    kernel.secret: abcdefg
+    debug.error_handler.throw_at: -1
+
+framework:
+    templating:
+        engines:
+            - twig
+    router:
+        resource: routing.yml
+
+inter_nations_type_jail:
+    types:
+        alias1: InterNations\Bundle\TypeJailBundle\Tests\Integration\Clazz

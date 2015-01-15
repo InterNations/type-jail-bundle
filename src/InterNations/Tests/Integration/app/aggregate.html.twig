@@ -1,0 +1,9 @@
+{% set list = jail_aggregate(list, 'alias1') %}
+
+{% for obj in list %}
+    {{ obj.method }}
+{% endfor %}
+
+{% for obj in list %}
+    {{ obj.subClassMethod }}
+{% endfor %}

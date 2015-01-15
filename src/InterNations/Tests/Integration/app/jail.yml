@@ -1,0 +1,5 @@
+imports:
+    - { resource: default.yml }
+
+inter_nations_type_jail:
+    factory: jail
