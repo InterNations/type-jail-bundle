@@ -26,16 +26,6 @@
             <call method="setProxiesTargetDir">
                 <argument>%inter_nations.type_jail.proxy_dir%</argument>
             </call>
-            <call method="setClassNameInflector">
-                <argument type="service" id="inter_nations.type_jail.class_name_inflector"/>
-            </call>
-        </service>
-
-        <service
-            id="inter_nations.type_jail.class_name_inflector"
-            class="InterNations\Component\TypeJail\Inflector\ClassNameInflector"
-            public="false">
-            <argument>%inter_nations.type_jail.namespace%</argument>
         </service>
 
         <service
