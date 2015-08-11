@@ -24,6 +24,7 @@ class TypeJailExtension extends Extension
     {
         return [
             new SimpleFunction('jail', [$this, 'createInstanceJail']),
+            new SimpleFunction('jail_or_null', [$this, 'createInstanceJailOrNull']),
             new SimpleFunction('jail_aggregate', [$this, 'createAggregateJail']),
         ];
     }
@@ -33,6 +34,15 @@ class TypeJailExtension extends Extension
         $type = $this->typeAliasManager->getType($typeOrAlias) ?: $typeOrAlias;
 
         return $this->jailFactory->createInstanceJail($instance, $type);
+    }
+
+    public function createInstanceJailOrNull($instance, $typeOrAlias)
+    {
+        if ($instance === null) {
+            return null;
+        }
+
+        return $this->createInstanceJail($instance, $typeOrAlias);
     }
 
     public function createAggregateJail($aggregate, $typeOrAlias)

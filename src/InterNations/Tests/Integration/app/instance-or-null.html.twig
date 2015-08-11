@@ -1,0 +1,4 @@
+{% set obj = jail_or_null(obj, 'alias1') %}
+{% set nil = jail_or_null(null, 'alias1') %}
+{{ dump(nil) }}
+{{ obj.subClassMethod }}

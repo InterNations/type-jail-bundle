@@ -64,6 +64,19 @@ class BundleIntegrationTest extends AbstractTestCase
         }
     }
 
+    public function testRenderNullTemplate()
+    {
+        $container = $this->getContainer('super-type-jail.yml', true);
+        $templating = $container->get('templating');
+
+        try {
+            $templating->render(__DIR__ . '/app/instance-or-null.html.twig', ['obj' => new SubClass()]);
+            $this->fail('Exception expected');
+        } catch (TwigRuntimeError $e) {
+            $this->assertInstanceOf(JailException::class, $e->getPrevious());
+        }
+    }
+
     public function testRenderAggregateTemplate()
     {
         $container = $this->getContainer('super-type-jail.yml', true);
