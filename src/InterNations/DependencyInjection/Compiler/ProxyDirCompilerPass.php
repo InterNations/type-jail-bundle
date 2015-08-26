@@ -12,5 +12,6 @@ class ProxyDirCompilerPass implements CompilerPassInterface
         $directory = $container->getParameter('inter_nations.type_jail.proxy_dir');
         $fs = new Filesystem();
         $fs->mkdir($directory);
+        $fs->touch($directory . '/.keep');
     }
 }
