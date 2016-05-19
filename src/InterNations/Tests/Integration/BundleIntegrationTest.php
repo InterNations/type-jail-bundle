@@ -3,6 +3,8 @@ namespace InterNations\Bundle\TypeJailBundle\Tests\Integration;
 
 use InterNations\Bundle\TypeJailBundle\Factory\NullFactory;
 use InterNations\Bundle\TypeJailBundle\Manager\TypeAliasManager;
+use InterNations\Bundle\TypeJailBundle\Tests\Integration\Fixtures\Clazz;
+use InterNations\Bundle\TypeJailBundle\Tests\Integration\Fixtures\SubClass;
 use InterNations\Component\Testing\AbstractTestCase;
 use InterNations\Bundle\TypeJailBundle\Tests\Integration\app\AppKernel;
 use InterNations\Component\TypeJail\Exception\JailException;
@@ -96,21 +98,5 @@ class BundleIntegrationTest extends AbstractTestCase
         $kernel->boot();
 
         return $kernel->getContainer();
-    }
-}
-
-class Clazz
-{
-    public function method()
-    {
-        return __FUNCTION__;
-    }
-}
-
-class SubClass extends Clazz
-{
-    public function subClassMethod()
-    {
-        return __FUNCTION__;
     }
 }
