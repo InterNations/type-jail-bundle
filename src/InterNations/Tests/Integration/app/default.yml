@@ -9,6 +9,8 @@ framework:
     router:
         resource: routing.yml
 
+    assets: false
+
 inter_nations_type_jail:
     types:
         alias1: InterNations\Bundle\TypeJailBundle\Tests\Integration\Fixtures\Clazz
