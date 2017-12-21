@@ -11,6 +11,10 @@ framework:
 
     assets: false
 
+twig:
+    paths:
+        src/InterNations/Tests/Integration/app: ~
+
 inter_nations_type_jail:
     types:
         alias1: InterNations\Bundle\TypeJailBundle\Tests\Integration\Fixtures\Clazz

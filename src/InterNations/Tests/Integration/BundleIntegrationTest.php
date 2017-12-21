@@ -11,7 +11,7 @@ use InterNations\Component\TypeJail\Exception\JailException;
 use InterNations\Component\TypeJail\Factory\JailFactory;
 use InterNations\Component\TypeJail\Factory\SuperTypeFactory;
 use InterNations\Component\TypeJail\Factory\SuperTypeJailFactory;
-use Twig_Error_Runtime as TwigRuntimeError;
+use Twig\Error\RuntimeError as TwigRuntimeError;
 
 /**
  * @group integration
@@ -36,7 +36,7 @@ class BundleIntegrationTest extends AbstractTestCase
     }
 
     /** @dataProvider getFactories */
-    public function testFactoryConfiguration($config, $expectedClass, $debug)
+    public function testFactoryConfiguration(string $config, string $expectedClass, bool $debug): void
     {
         $container = $this->getContainer($config, $debug);
         $factory = $container->get('inter_nations.type_jail.factory');
@@ -59,7 +59,7 @@ class BundleIntegrationTest extends AbstractTestCase
         $templating = $container->get('templating');
 
         try {
-            $templating->render(__DIR__ . '/app/instance.html.twig', ['obj' => new SubClass()]);
+            $templating->render('instance.html.twig', ['obj' => new SubClass()]);
             $this->fail('Exception expected');
         } catch (TwigRuntimeError $e) {
             $this->assertInstanceOf(JailException::class, $e->getPrevious());
@@ -72,7 +72,7 @@ class BundleIntegrationTest extends AbstractTestCase
         $templating = $container->get('templating');
 
         try {
-            $templating->render(__DIR__ . '/app/instance-or-null.html.twig', ['obj' => new SubClass()]);
+            $templating->render('instance-or-null.html.twig', ['obj' => new SubClass()]);
             $this->fail('Exception expected');
         } catch (TwigRuntimeError $e) {
             $this->assertInstanceOf(JailException::class, $e->getPrevious());
@@ -85,7 +85,7 @@ class BundleIntegrationTest extends AbstractTestCase
         $templating = $container->get('templating');
 
         try {
-            $templating->render(__DIR__ . '/app/aggregate.html.twig', ['list' => [new SubClass(), new SubClass()]]);
+            $templating->render('aggregate.html.twig', ['list' => [new SubClass(), new SubClass()]]);
             $this->fail('Exception expected');
         } catch (TwigRuntimeError $e) {
             $this->assertInstanceOf(JailException::class, $e->getPrevious());

@@ -15,7 +15,7 @@
     </parameters>
 
     <services>
-        <service id="inter_nations.type_jail.factory" class="%inter_nations.type_jail.factory.class%">
+        <service id="inter_nations.type_jail.factory" class="%inter_nations.type_jail.factory.class%" public="true">
             <argument type="service" id="inter_nations.type_jail.configuration"/>
         </service>
 
@@ -30,7 +30,8 @@
 
         <service
             id="inter_nations.type_jail.manager.type_alias_manager"
-            class="InterNations\Bundle\TypeJailBundle\Manager\TypeAliasManager">
+            class="InterNations\Bundle\TypeJailBundle\Manager\TypeAliasManager"
+            public="true">
             <argument>%inter_nations.type_jail.types%</argument>
         </service>
 
