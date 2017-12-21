@@ -8,7 +8,8 @@ use Symfony\Component\DependencyInjection\Loader;
 
 class InterNationsTypeJailExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    /** @param mixed[] $configs */
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('type_jail.xml');
@@ -23,7 +24,7 @@ class InterNationsTypeJailExtension extends Extension
         $container->setParameter('inter_nations.type_jail.types', $isEnabled ? $config['types'] : []);
     }
 
-    private static function isEnabled($enabled, $debug)
+    private static function isEnabled(?bool $enabled, bool $debug): bool
     {
         return $enabled === null ? $debug : $enabled;
     }

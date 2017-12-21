@@ -11,6 +11,7 @@ use InterNations\Component\TypeJail\Exception\JailException;
 use InterNations\Component\TypeJail\Factory\JailFactory;
 use InterNations\Component\TypeJail\Factory\SuperTypeFactory;
 use InterNations\Component\TypeJail\Factory\SuperTypeJailFactory;
+use Psr\Container\ContainerInterface;
 use Twig\Error\RuntimeError as TwigRuntimeError;
 
 /**
@@ -19,7 +20,8 @@ use Twig\Error\RuntimeError as TwigRuntimeError;
  */
 class BundleIntegrationTest extends AbstractTestCase
 {
-    public static function getFactories()
+    /** @return array[] */
+    public static function getFactories(): iterable
     {
         return [
             ['default.yml', JailFactory::class, true],
@@ -41,58 +43,58 @@ class BundleIntegrationTest extends AbstractTestCase
         $container = $this->getContainer($config, $debug);
         $factory = $container->get('inter_nations.type_jail.factory');
 
-        $this->assertInstanceOf($expectedClass, $factory);
+        self::assertInstanceOf($expectedClass, $factory);
     }
 
-    public function testTypeManagerConfiguration()
+    public function testTypeManagerConfiguration(): void
     {
         $container = $this->getContainer('jail.yml', true);
         $typeManager = $container->get('inter_nations.type_jail.manager.type_alias_manager');
 
-        $this->assertInstanceOf(TypeAliasManager::class, $typeManager);
-        $this->assertSame(Clazz::class, $typeManager->getType('alias1'));
+        self::assertInstanceOf(TypeAliasManager::class, $typeManager);
+        self::assertSame(Clazz::class, $typeManager->getType('alias1'));
     }
 
-    public function testRenderInstanceTemplate()
+    public function testRenderInstanceTemplate(): void
     {
         $container = $this->getContainer('super-type-jail.yml', true);
         $templating = $container->get('templating');
 
         try {
             $templating->render('instance.html.twig', ['obj' => new SubClass()]);
-            $this->fail('Exception expected');
+            self::fail('Exception expected');
         } catch (TwigRuntimeError $e) {
-            $this->assertInstanceOf(JailException::class, $e->getPrevious());
+            self::assertInstanceOf(JailException::class, $e->getPrevious());
         }
     }
 
-    public function testRenderNullTemplate()
+    public function testRenderNullTemplate(): void
     {
         $container = $this->getContainer('super-type-jail.yml', true);
         $templating = $container->get('templating');
 
         try {
             $templating->render('instance-or-null.html.twig', ['obj' => new SubClass()]);
-            $this->fail('Exception expected');
+            self::fail('Exception expected');
         } catch (TwigRuntimeError $e) {
-            $this->assertInstanceOf(JailException::class, $e->getPrevious());
+            self::assertInstanceOf(JailException::class, $e->getPrevious());
         }
     }
 
-    public function testRenderAggregateTemplate()
+    public function testRenderAggregateTemplate(): void
     {
         $container = $this->getContainer('super-type-jail.yml', true);
         $templating = $container->get('templating');
 
         try {
             $templating->render('aggregate.html.twig', ['list' => [new SubClass(), new SubClass()]]);
-            $this->fail('Exception expected');
+            self::fail('Exception expected');
         } catch (TwigRuntimeError $e) {
-            $this->assertInstanceOf(JailException::class, $e->getPrevious());
+            self::assertInstanceOf(JailException::class, $e->getPrevious());
         }
     }
 
-    private function getContainer($config, $debug)
+    private function getContainer(string $config, bool $debug): ContainerInterface
     {
         $kernel = new AppKernel($config, 'prod', $debug);
         $kernel->boot();

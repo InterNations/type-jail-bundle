@@ -4,7 +4,7 @@ namespace InterNations\Bundle\TypeJailBundle\View\Twig\Extension;
 use InterNations\Bundle\TypeJailBundle\Manager\TypeAliasManager;
 use InterNations\Component\TypeJail\Factory\JailFactoryInterface;
 use Twig_Extension as Extension;
-use Twig_SimpleFunction as SimpleFunction;
+use Twig\TwigFunction;
 
 class TypeJailExtension extends Extension
 {
@@ -20,23 +20,32 @@ class TypeJailExtension extends Extension
         $this->typeAliasManager = $typeAliasManager;
     }
 
-    public function getFunctions()
+    /** @return TwigFunction[] */
+    public function getFunctions(): array
     {
         return [
-            new SimpleFunction('jail', [$this, 'createInstanceJail']),
-            new SimpleFunction('jail_or_null', [$this, 'createInstanceJailOrNull']),
-            new SimpleFunction('jail_aggregate', [$this, 'createAggregateJail']),
+            new TwigFunction('jail', [$this, 'createInstanceJail']),
+            new TwigFunction('jail_or_null', [$this, 'createInstanceJailOrNull']),
+            new TwigFunction('jail_aggregate', [$this, 'createAggregateJail']),
         ];
     }
 
-    public function createInstanceJail($instance, $typeOrAlias)
+    /**
+     * @param object $instance
+     * @return object
+     */
+    public function createInstanceJail($instance, string $typeOrAlias)
     {
         $type = $this->typeAliasManager->getType($typeOrAlias) ?: $typeOrAlias;
 
         return $this->jailFactory->createInstanceJail($instance, $type);
     }
 
-    public function createInstanceJailOrNull($instance, $typeOrAlias)
+    /**
+     * @param object $instance
+     * @return null|object
+     */
+    public function createInstanceJailOrNull($instance, string $typeOrAlias)
     {
         if ($instance === null) {
             return null;
@@ -45,7 +54,11 @@ class TypeJailExtension extends Extension
         return $this->createInstanceJail($instance, $typeOrAlias);
     }
 
-    public function createAggregateJail($aggregate, $typeOrAlias)
+    /**
+     * @param object[] $aggregate
+     * @return object[]
+     */
+    public function createAggregateJail(iterable $aggregate, string $typeOrAlias): array
     {
         $type = $this->typeAliasManager->getType($typeOrAlias) ?: $typeOrAlias;
 
@@ -53,7 +66,7 @@ class TypeJailExtension extends Extension
         return $this->jailFactory->createAggregateJail($aggregate, $type);
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'jail';
     }
