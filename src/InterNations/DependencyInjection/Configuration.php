@@ -8,10 +8,9 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('inter_nations_type_jail');
+        $treeBuilder = new TreeBuilder('inter_nations_type_jail');
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->children()
                 ->booleanNode('enabled')->defaultNull()->end()
                 ->scalarNode('factory')->defaultValue('jail')->end()
