@@ -3,16 +3,14 @@ namespace InterNations\Bundle\TypeJailBundle\View\Twig\Extension;
 
 use InterNations\Bundle\TypeJailBundle\Manager\TypeAliasManager;
 use InterNations\Component\TypeJail\Factory\JailFactoryInterface;
-use Twig_Extension as Extension;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use function iterator_to_array;
 
-class TypeJailExtension extends Extension
+class TypeJailExtension extends AbstractExtension
 {
-    /** @var JailFactoryInterface */
-    private $jailFactory;
-
-    /** @var TypeAliasManager */
-    private $typeAliasManager;
+    private JailFactoryInterface $jailFactory;
+    private TypeAliasManager $typeAliasManager;
 
     public function __construct(JailFactoryInterface $jailFactory, TypeAliasManager $typeAliasManager)
     {
@@ -30,22 +28,14 @@ class TypeJailExtension extends Extension
         ];
     }
 
-    /**
-     * @param object $instance
-     * @return object
-     */
-    public function createInstanceJail($instance, string $typeOrAlias)
+    public function createInstanceJail(object $instance, string $typeOrAlias): object
     {
         $type = $this->typeAliasManager->getType($typeOrAlias) ?: $typeOrAlias;
 
         return $this->jailFactory->createInstanceJail($instance, $type);
     }
 
-    /**
-     * @param object $instance
-     * @return null|object
-     */
-    public function createInstanceJailOrNull($instance, string $typeOrAlias)
+    public function createInstanceJailOrNull(?object $instance, string $typeOrAlias): ?object
     {
         if ($instance === null) {
             return null;
@@ -54,16 +44,11 @@ class TypeJailExtension extends Extension
         return $this->createInstanceJail($instance, $typeOrAlias);
     }
 
-    /**
-     * @param object[] $aggregate
-     * @return object[]
-     */
-    public function createAggregateJail(iterable $aggregate, string $typeOrAlias): array
+    public function createAggregateJail(iterable $aggregate, string $typeOrAlias): iterable
     {
         $type = $this->typeAliasManager->getType($typeOrAlias) ?: $typeOrAlias;
 
-
-        return $this->jailFactory->createAggregateJail($aggregate, $type);
+        return iterator_to_array($this->jailFactory->createAggregateJail($aggregate, $type));
     }
 
     public function getName(): string

@@ -1,10 +1,10 @@
 <?php
 namespace InterNations\Bundle\TypeJailBundle\Manager;
 
-class TypeAliasManager
+final class TypeAliasManager
 {
     /** @var array */
-    private $typeMap;
+    private array $typeMap;
 
     /** @param string[] $typeMap */
     public function __construct(array $typeMap)
@@ -14,6 +14,6 @@ class TypeAliasManager
 
     public function getType(string $alias): ?string
     {
-        return isset($this->typeMap[$alias]) ? $this->typeMap[$alias] : null;
+        return $this->typeMap[$alias] ?? null;
     }
 }

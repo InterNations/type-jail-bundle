@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class AppKernel extends Kernel
 {
-    private $rootConfig;
+    private string $rootConfig;
 
     public function __construct(string $rootConfig, string $environment, bool $debug)
     {
@@ -26,11 +26,6 @@ class AppKernel extends Kernel
             new TwigBundle(),
             new InterNationsTypeJailBundle()
         ];
-    }
-
-    public function getRootDir(): string
-    {
-        return __DIR__;
     }
 
     public function getCacheDir(): string

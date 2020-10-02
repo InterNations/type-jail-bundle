@@ -3,9 +3,6 @@ parameters:
     debug.error_handler.throw_at: -1
 
 framework:
-    templating:
-        engines:
-            - twig
     router:
         resource: routing.yml
 

@@ -3,13 +3,9 @@ namespace InterNations\Bundle\TypeJailBundle\Factory;
 
 use InterNations\Component\TypeJail\Factory\JailFactoryInterface;
 
-class NullFactory implements JailFactoryInterface
+final class NullFactory implements JailFactoryInterface
 {
-    /**
-     * @param object $instance
-     * @return object
-     */
-    public function createInstanceJail($instance, string $class)
+    public function createInstanceJail(object $instance, string $class): object
     {
         return $instance;
     }
@@ -18,7 +14,7 @@ class NullFactory implements JailFactoryInterface
      * @param iterable|object[] $instanceAggregate
      * @return array|object[]
      */
-    public function createAggregateJail(iterable $instanceAggregate, string $class): array
+    public function createAggregateJail(iterable $instanceAggregate, string $class): iterable
     {
         return $instanceAggregate;
     }
