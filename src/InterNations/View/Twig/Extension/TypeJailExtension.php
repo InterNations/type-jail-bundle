@@ -44,6 +44,10 @@ class TypeJailExtension extends AbstractExtension
         return $this->createInstanceJail($instance, $typeOrAlias);
     }
 
+    /**
+     * @param object[] $aggregate
+     * @return object[]
+     */
     public function createAggregateJail(iterable $aggregate, string $typeOrAlias): iterable
     {
         $type = $this->typeAliasManager->getType($typeOrAlias) ?: $typeOrAlias;
