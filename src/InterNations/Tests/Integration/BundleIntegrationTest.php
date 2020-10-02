@@ -5,12 +5,12 @@ use InterNations\Bundle\TypeJailBundle\Factory\NullFactory;
 use InterNations\Bundle\TypeJailBundle\Manager\TypeAliasManager;
 use InterNations\Bundle\TypeJailBundle\Tests\Integration\Fixtures\Clazz;
 use InterNations\Bundle\TypeJailBundle\Tests\Integration\Fixtures\SubClass;
-use InterNations\Component\Testing\AbstractTestCase;
 use InterNations\Bundle\TypeJailBundle\Tests\Integration\app\AppKernel;
 use InterNations\Component\TypeJail\Exception\JailException;
 use InterNations\Component\TypeJail\Factory\JailFactory;
 use InterNations\Component\TypeJail\Factory\SuperTypeFactory;
 use InterNations\Component\TypeJail\Factory\SuperTypeJailFactory;
+use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Twig\Error\RuntimeError as TwigRuntimeError;
 
@@ -18,7 +18,7 @@ use Twig\Error\RuntimeError as TwigRuntimeError;
  * @group integration
  * @group large
  */
-class BundleIntegrationTest extends AbstractTestCase
+class BundleIntegrationTest extends TestCase
 {
     /** @return array[] */
     public static function getFactories(): iterable
@@ -58,7 +58,7 @@ class BundleIntegrationTest extends AbstractTestCase
     public function testRenderInstanceTemplate(): void
     {
         $container = $this->getContainer('super-type-jail.yml', true);
-        $templating = $container->get('templating');
+        $templating = $container->get('twig');
 
         try {
             $templating->render('instance.html.twig', ['obj' => new SubClass()]);
@@ -71,7 +71,7 @@ class BundleIntegrationTest extends AbstractTestCase
     public function testRenderNullTemplate(): void
     {
         $container = $this->getContainer('super-type-jail.yml', true);
-        $templating = $container->get('templating');
+        $templating = $container->get('twig');
 
         try {
             $templating->render('instance-or-null.html.twig', ['obj' => new SubClass()]);
@@ -84,7 +84,7 @@ class BundleIntegrationTest extends AbstractTestCase
     public function testRenderAggregateTemplate(): void
     {
         $container = $this->getContainer('super-type-jail.yml', true);
-        $templating = $container->get('templating');
+        $templating = $container->get('twig');
 
         try {
             $templating->render('aggregate.html.twig', ['list' => [new SubClass(), new SubClass()]]);

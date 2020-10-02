@@ -26,6 +26,6 @@ class InterNationsTypeJailExtension extends Extension
 
     private static function isEnabled(?bool $enabled, bool $debug): bool
     {
-        return $enabled === null ? $debug : $enabled;
+        return $enabled ?? $debug;
     }
 }
