@@ -29,6 +29,11 @@
             "InterNations\\Bundle\\TypeJailBundle\\": "src/InterNations"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+		  "InterNations\\Bundle\\TypeJailBundle\\": "tests/InterNations"
+        }
+    },
     "scripts": {
         "tests": "phpunit",
         "coding-style": "phpcs --standard=vendor/internations/kodierungsregelwerksammlung/ruleset.xml --exclude=InterNations.Naming.NamespaceName,InterNations.Naming.Final --ignore=*/Fixtures/* ./src/",

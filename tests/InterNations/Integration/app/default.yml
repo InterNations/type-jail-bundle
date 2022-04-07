@@ -10,8 +10,8 @@ framework:
 
 twig:
     paths:
-        src/InterNations/Tests/Integration/app: ~
+        tests/InterNations/Integration/app: ~
 
 inter_nations_type_jail:
     types:
-        alias1: InterNations\Bundle\TypeJailBundle\Tests\Integration\Fixtures\Clazz
+        alias1: InterNations\Bundle\TypeJailBundle\Integration\Fixtures\Clazz

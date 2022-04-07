@@ -1,5 +1,5 @@
 <?php
-namespace InterNations\Bundle\TypeJailBundle\Tests\Integration\Fixtures;
+namespace InterNations\Bundle\TypeJailBundle\Integration\Fixtures;
 
 class SubClass extends Clazz
 {

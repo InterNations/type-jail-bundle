@@ -1,5 +1,5 @@
 <?php
-namespace InterNations\Bundle\TypeJailBundle\Tests\Integration\app;
+namespace InterNations\Bundle\TypeJailBundle\Integration\app;
 
 use InterNations\Bundle\TypeJailBundle\InterNationsTypeJailBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
