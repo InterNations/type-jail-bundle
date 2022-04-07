@@ -1,11 +1,12 @@
 <?php
-namespace InterNations\Bundle\TypeJailBundle\Tests\Integration;
+
+namespace InterNations\Bundle\TypeJailBundle\Integration;
 
 use InterNations\Bundle\TypeJailBundle\Factory\NullFactory;
+use InterNations\Bundle\TypeJailBundle\Integration\app\AppKernel;
+use InterNations\Bundle\TypeJailBundle\Integration\Fixtures\Clazz;
+use InterNations\Bundle\TypeJailBundle\Integration\Fixtures\SubClass;
 use InterNations\Bundle\TypeJailBundle\Manager\TypeAliasManager;
-use InterNations\Bundle\TypeJailBundle\Tests\Integration\Fixtures\Clazz;
-use InterNations\Bundle\TypeJailBundle\Tests\Integration\Fixtures\SubClass;
-use InterNations\Bundle\TypeJailBundle\Tests\Integration\app\AppKernel;
 use InterNations\Component\TypeJail\Exception\JailException;
 use InterNations\Component\TypeJail\Factory\JailFactory;
 use InterNations\Component\TypeJail\Factory\SuperTypeFactory;

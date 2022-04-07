@@ -10,7 +10,7 @@
 
     <testsuites>
         <testsuite name="internations/type-jail-bundle">
-            <directory>./src/InterNations/Tests</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 
