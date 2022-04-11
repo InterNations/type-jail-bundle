@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class InterNationsTypeJailBundle extends Bundle
 {
+    /** @no-named-arguments */
     public function build(ContainerBuilder $container): void
     {
         parent::build($container);

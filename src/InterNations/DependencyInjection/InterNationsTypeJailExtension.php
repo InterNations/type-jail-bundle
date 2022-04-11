@@ -8,7 +8,10 @@ use Symfony\Component\DependencyInjection\Loader;
 
 class InterNationsTypeJailExtension extends Extension
 {
-    /** @param mixed[] $configs */
+    /**
+     * @param mixed[] $configs
+     * @no-named-arguments
+     */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
