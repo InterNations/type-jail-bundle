@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=7.4",
-        "internations/type-jail": "^3.0.0",
+        "internations/type-jail": "^2 || ^3",
         "symfony/http-kernel": ">=4.4",
         "symfony/dependency-injection": ">=4.4",
         "symfony/twig-bundle": ">=4.4"
