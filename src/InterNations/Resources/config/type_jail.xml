@@ -38,7 +38,7 @@
         <service
             id="inter_nations.type_jail.view.twig.extension.type_jail_extension"
             class="InterNations\Bundle\TypeJailBundle\View\Twig\Extension\TypeJailExtension"
-            public="false">
+            public="true">
             <argument type="service" id="inter_nations.type_jail.factory"/>
             <argument type="service" id="inter_nations.type_jail.manager.type_alias_manager"/>
             <tag name="twig.extension" />
