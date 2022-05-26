@@ -7,6 +7,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ProxyDirCompilerPass implements CompilerPassInterface
 {
+    /** @no-named-arguments */
     public function process(ContainerBuilder $container): void
     {
         $directory = $container->getParameter('inter_nations.type_jail.proxy_dir');

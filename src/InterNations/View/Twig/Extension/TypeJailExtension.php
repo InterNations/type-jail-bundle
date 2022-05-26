@@ -12,13 +12,17 @@ class TypeJailExtension extends AbstractExtension
     private JailFactoryInterface $jailFactory;
     private TypeAliasManager $typeAliasManager;
 
+    /** @no-named-arguments */
     public function __construct(JailFactoryInterface $jailFactory, TypeAliasManager $typeAliasManager)
     {
         $this->jailFactory = $jailFactory;
         $this->typeAliasManager = $typeAliasManager;
     }
 
-    /** @return TwigFunction[] */
+    /**
+     * @return TwigFunction[]
+     * @no-named-arguments
+     */
     public function getFunctions(): array
     {
         return [
@@ -28,6 +32,7 @@ class TypeJailExtension extends AbstractExtension
         ];
     }
 
+    /** @no-named-arguments */
     public function createInstanceJail(object $instance, string $typeOrAlias): object
     {
         $type = $this->typeAliasManager->getType($typeOrAlias) ?: $typeOrAlias;
@@ -35,6 +40,7 @@ class TypeJailExtension extends AbstractExtension
         return $this->jailFactory->createInstanceJail($instance, $type);
     }
 
+    /** @no-named-arguments */
     public function createInstanceJailOrNull(?object $instance, string $typeOrAlias): ?object
     {
         if ($instance === null) {
@@ -47,6 +53,7 @@ class TypeJailExtension extends AbstractExtension
     /**
      * @param object[] $aggregate
      * @return object[]
+     * @no-named-arguments
      */
     public function createAggregateJail(iterable $aggregate, string $typeOrAlias): array
     {

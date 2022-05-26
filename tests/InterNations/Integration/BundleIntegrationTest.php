@@ -11,15 +11,15 @@ use InterNations\Component\TypeJail\Exception\JailException;
 use InterNations\Component\TypeJail\Factory\JailFactory;
 use InterNations\Component\TypeJail\Factory\SuperTypeFactory;
 use InterNations\Component\TypeJail\Factory\SuperTypeJailFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\RuntimeError as TwigRuntimeError;
 
 /**
  * @group integration
  * @group large
  */
-class BundleIntegrationTest extends TestCase
+class BundleIntegrationTest extends WebTestCase
 {
     /** @return array[] */
     public static function getFactories(): iterable
@@ -41,16 +41,20 @@ class BundleIntegrationTest extends TestCase
     /** @dataProvider getFactories */
     public function testFactoryConfiguration(string $config, string $expectedClass, bool $debug): void
     {
-        $container = $this->getContainer($config, $debug);
-        $factory = $container->get('inter_nations.type_jail.factory');
+		$options['config'] = $config;
+		$options['debug'] = $debug;
+		self::bootKernel($options);
+        $factory = self::$kernel->getContainer()->get('inter_nations.type_jail.factory');
 
         self::assertInstanceOf($expectedClass, $factory);
     }
 
     public function testTypeManagerConfiguration(): void
     {
-        $container = $this->getContainer('jail.yml', true);
-        $typeManager = $container->get('inter_nations.type_jail.manager.type_alias_manager');
+		$options['config'] = 'jail.yml';
+		$options['debug'] = true;
+		self::bootKernel($options);
+        $typeManager = self::getContainer()->get('inter_nations.type_jail.manager.type_alias_manager');
 
         self::assertInstanceOf(TypeAliasManager::class, $typeManager);
         self::assertSame(Clazz::class, $typeManager->getType('alias1'));
@@ -58,8 +62,10 @@ class BundleIntegrationTest extends TestCase
 
     public function testRenderInstanceTemplate(): void
     {
-        $container = $this->getContainer('super-type-jail.yml', true);
-        $templating = $container->get('twig');
+		$options['config'] = 'super-type-jail.yml';
+		$options['debug'] = true;
+		self::bootKernel($options);
+		$templating = self::getContainer()->get('twig');
 
         try {
             $templating->render('instance.html.twig', ['obj' => new SubClass()]);
@@ -71,8 +77,10 @@ class BundleIntegrationTest extends TestCase
 
     public function testRenderNullTemplate(): void
     {
-        $container = $this->getContainer('super-type-jail.yml', true);
-        $templating = $container->get('twig');
+		$options['config'] = 'super-type-jail.yml';
+		$options['debug'] = true;
+		self::bootKernel($options);
+		$templating = self::getContainer()->get('twig');
 
         try {
             $templating->render('instance-or-null.html.twig', ['obj' => new SubClass()]);
@@ -84,8 +92,10 @@ class BundleIntegrationTest extends TestCase
 
     public function testRenderAggregateTemplate(): void
     {
-        $container = $this->getContainer('super-type-jail.yml', true);
-        $templating = $container->get('twig');
+		$options['config'] = 'super-type-jail.yml';
+		$options['debug'] = true;
+		self::bootKernel($options);
+        $templating = static::getContainer()->get('twig');
 
         try {
             $templating->render('aggregate.html.twig', ['list' => [new SubClass(), new SubClass()]]);
@@ -95,11 +105,9 @@ class BundleIntegrationTest extends TestCase
         }
     }
 
-    private function getContainer(string $config, bool $debug): ContainerInterface
-    {
-        $kernel = new AppKernel($config, 'prod', $debug);
-        $kernel->boot();
-
-        return $kernel->getContainer();
-    }
+	protected static function createKernel(array $options = []): KernelInterface
+	{
+		static::$class = AppKernel::class;
+		return new static::$class($options['config'], 'test', $options['debug']);
+	}
 }
