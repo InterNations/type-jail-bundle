@@ -3,6 +3,7 @@ parameters:
     debug.error_handler.throw_at: -1
 
 framework:
+    test: true
     router:
         resource: routing.yml
 
